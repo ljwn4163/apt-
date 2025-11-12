@@ -132,3 +132,79 @@ S4	리팩토링·테스트 고도화 및 공개 문서 정리	최종 버전
 문의: 프로젝트 담당자 (예: contact@apt.dev)
 
 기여: GitHub Issues 또는 Pull Request를 통해 개선 제안 가능
+
+
+apt-/
+│
+├── README.md                     # 프로젝트 개요 (대표 문서)
+├── LICENSE                       # MIT License
+├── .gitignore                    # 불필요 파일 제외
+├── requirements.txt              # 기본 의존성 (또는 pyproject.toml)
+│
+├── data/                         # 데이터 관련
+│   ├── raw/                      # 원천 (비공개, .gitignore 처리)
+│   ├── processed/                # 전처리된 공개용 (지수 계산용)
+│   │   ├── seoul_apartment_prices.csv
+│   │   ├── anchor_reference.csv
+│   │   └── macro_indicators.csv
+│   └── outputs/                  # 결과물 (지수 시계열 등)
+│       └── index_timeseries.csv
+│
+├── src/                          # 핵심 코드 (모듈화)
+│   └── apt/
+│       ├── __init__.py
+│       ├── data_io.py            # 데이터 입출력 (load_prices 등)
+│       ├── index_calculator.py   # 앵커링 기반 지수 계산
+│       ├── oracle_pipeline.py    # 금리/CPI 등 매크로 보정
+│       ├── futures_simulation.py # 파생상품 시뮬레이션 (v0.2+)
+│       ├── orderbook_engine.py   # 호가창 매칭 엔진 (v0.3)
+│       ├── visualization.py      # 시각화 모듈 (v0.2)
+│       └── utils.py              # 공용 함수, 상수 등
+│
+├── notebooks/                    # 분석/검증용 노트북
+│   ├── 00_make_mock_data.ipynb   # 더미데이터 생성
+│   ├── 01_index_validation.ipynb # 지수 검증
+│   └── 02_macro_sensitivity.ipynb
+│
+├── tests/                        # 자동 테스트
+│   ├── test_index_calculator.py
+│   ├── test_data_io.py
+│   └── test_oracle_pipeline.py
+│
+├── docs/                         # 프로젝트 문서화 (핵심)
+│   ├── 00-overview.md            # 전체 개요
+│   ├── 01-index/
+│   │   ├── anchoring-method.md   # 앵커링 수식/원리
+│   │   ├── data-spec.md          # 데이터 스펙/출처
+│   │   └── validation.md         # 검증/백테스트
+│   ├── 02-derivatives/
+│   │   ├── futures-design.md     # 선물 설계
+│   │   └── risk-metrics.md
+│   ├── 03-systems/
+│   │   ├── data-pipeline.md      # ETL 구조
+│   │   └── oracle.md
+│   ├── 04-research/
+│   │   ├── adr/ADR-0001-anchoring-as-core-index.md
+│   │   └── experiments/
+│   ├── 05-governance/
+│   │   ├── roadmap.md            # 버전 로드맵
+│   │   ├── changelog.md
+│   │   ├── contributing.md
+│   │   └── data-policy.md
+│   ├── 06-guides/
+│   │   ├── quickstart.md
+│   │   └── dev-setup.md
+│   └── glossary.md
+│
+├── .github/                      # 깃허브 자동화
+│   ├── workflows/
+│   │   └── ci.yaml               # CI 자동 테스트
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.md
+│   │   └── feature_request.md
+│   └── pull_request_template.md
+│
+└── scripts/                      # 유틸리티 (데이터/백테스트)
+    ├── make_mock_data.py
+    └── run_index_pipeline.py
+
